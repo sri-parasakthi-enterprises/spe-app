@@ -1,46 +1,24 @@
 package com.spe.speorderservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+public class OrderItem implements Serializable {
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8257661113135843845L;
 
-@Entity
-@Table(name = "order_items")
-public class OrderItem extends AuditModel {
+	private Long itemId;
 
-	private static final long serialVersionUID = 6910545330374986103L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "order_id", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private Order order;
-
-	@NotNull
 	private Long productId;
 
 	private String itemDesc;
 
-	@NotBlank
+	private String hsnCode;
+
 	private Double quantity;
 
-	@NotBlank
 	private String paperType; // NILL, QuadCap, DblCap, DblCrown, DblDemy etc
 
 	private Short gsm;
@@ -51,23 +29,14 @@ public class OrderItem extends AuditModel {
 
 	private String itemType; // KS, LS, SS, Record-note etc
 
-	@NotBlank
 	private Double unitRate;
 
-	public Long getId() {
-		return id;
+	public Long getItemId() {
+		return itemId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setItemId(Long id) {
+		this.itemId = id;
 	}
 
 	public Long getProductId() {
@@ -84,6 +53,14 @@ public class OrderItem extends AuditModel {
 
 	public void setItemDesc(String itemDesc) {
 		this.itemDesc = itemDesc;
+	}
+
+	public String getHsnCode() {
+		return hsnCode;
+	}
+
+	public void setHsnCode(String hsnCode) {
+		this.hsnCode = hsnCode;
 	}
 
 	public Double getQuantity() {

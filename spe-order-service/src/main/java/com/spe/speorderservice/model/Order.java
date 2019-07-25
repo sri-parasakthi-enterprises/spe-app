@@ -1,54 +1,45 @@
 package com.spe.speorderservice.model;
 
+import java.io.Serializable;
 import java.util.Date;
-//import java.util.List;
+import java.util.List;
 
-//import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-//import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-//import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "order")
-@EntityListeners(AuditingEntityListener.class)
-public class Order extends AuditModel {
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@Document(collection = "order")
+public class Order implements Serializable {
 
-	private static final long serialVersionUID = -398056818233649330L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7477291156523691011L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank
 	private Long partyId;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date orderDate;
 
-	@NotBlank
-	@Enumerated(EnumType.STRING)
-	private OrderStatus orderStatus;
+    @CreatedDate
+    private Date createdAt;
 
-	@NotBlank
+    @LastModifiedDate
+    private Date updatedAt;
+
+    private OrderStatus orderStatus;
+
 	private String description;
 
 	private String invoiceId;
 
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "orderItems")
-//	@NotBlank
-//	private List<OrderItem> orderItems;
+	private List<OrderItem> orderItems;
 
 	public Long getId() {
 		return id;
@@ -72,6 +63,22 @@ public class Order extends AuditModel {
 
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public OrderStatus getOrderStatus() {
@@ -98,12 +105,12 @@ public class Order extends AuditModel {
 		this.invoiceId = invoiceId;
 	}
 
-//	public List<OrderItem> getOrderItems() {
-//		return orderItems;
-//	}
-//
-//	public void setOrderItems(List<OrderItem> orderItems) {
-//		this.orderItems = orderItems;
-//	}
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
 
 }
