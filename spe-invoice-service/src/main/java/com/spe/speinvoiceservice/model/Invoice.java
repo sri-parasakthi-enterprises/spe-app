@@ -1,52 +1,55 @@
 package com.spe.speinvoiceservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
-@Entity
-@Table(name = "invoice")
-public class Invoice extends AuditModel {
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-	private static final long serialVersionUID = -2338421187752448587L;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@Document(collection = "invoice")
+public class Invoice implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4693240109700407083L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
 	private Long partyId;
 
-	@NotNull
 	private Long orderId;
 
-	@NotNull
 	private Double discount;
 
-	@NotBlank
+	private List<InvoiceItem> invoiceItems;
+
 	private String shipToAddLine1;
 
-	@NotBlank
 	private String shipToAddLine2;
 
-	@NotBlank
 	private String shipToAddLine3;
 
-	@NotBlank
 	private String shipToCity;
 
-	@NotBlank
 	private String shipToState;
 
-	@NotBlank
 	private String shipToPin;
 
-	@NotBlank
 	private String remarks;
+
+    @CreatedDate
+    private Date createdAt;
+
+    @LastModifiedDate
+    private Date updatedAt;
 
 	public Long getId() {
 		return id;
@@ -78,6 +81,14 @@ public class Invoice extends AuditModel {
 
 	public void setDiscount(Double discount) {
 		this.discount = discount;
+	}
+
+	public List<InvoiceItem> getInvoiceItems() {
+		return invoiceItems;
+	}
+
+	public void setInvoiceItems(List<InvoiceItem> invoiceItems) {
+		this.invoiceItems = invoiceItems;
 	}
 
 	public String getShipToAddLine1() {
@@ -134,6 +145,22 @@ public class Invoice extends AuditModel {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 }
