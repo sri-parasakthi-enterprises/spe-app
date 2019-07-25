@@ -1,11 +1,14 @@
 package com.spe.spepartyservice.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import com.spe.spepartyservice.model.Party;
 
-@Repository
-public interface PartyRepository extends JpaRepository<Party, Long> {
+public interface PartyRepository extends MongoRepository<Party, Long> {
 
+	@Query("{name: { $regex: ?0 } })")
+    List<Party> findPartyByRegExName(String name);
 }

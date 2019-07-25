@@ -3,70 +3,46 @@ package com.spe.spepartyservice.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "party")
-@EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@Document(collection = "party")
 public class Party implements Serializable {
 
 	private static final long serialVersionUID = -18330319910256623L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@NotBlank
     private String salutation;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String type;
 
-    @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    private String gstin;
+
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
 
-    @NotBlank
     private String addLine1;
 
-    @NotBlank
     private String addLine2;
 
-    @NotBlank
     private String addLine3;
 
-    @NotBlank
     private String city;
 
-    @NotBlank
     private String state;
 
-    @NotBlank
     private String pin;
 
 	public Long getId() {
@@ -99,6 +75,14 @@ public class Party implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getGstin() {
+		return gstin;
+	}
+
+	public void setGstin(String gstin) {
+		this.gstin = gstin;
 	}
 
 	public Date getCreatedAt() {

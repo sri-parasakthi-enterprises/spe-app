@@ -1,5 +1,7 @@
 package com.spe.spepartyservice.controller;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,35 +28,22 @@ public class PartyController {
 	@Autowired
 	PartyRepository partyRepository;
 
-	/*	 
-	 * Get all parties
-	 * TODO - implement a pageable fetch method
-	*/
 	@GetMapping("/party")
 	public Page<Party> getAllParties(Pageable pageable) {
 		return partyRepository.findAll(pageable);
 	}
 
-	/*
-	 * Create a party
-	 */
 	@PostMapping("/party")
 	public Party createParty(@Valid @RequestBody Party party) {
 		return partyRepository.save(party);
 	}
 
-	/*
-	 * Get a single party by Id
-	 */
 	@GetMapping("/party/{id}")
 	public Party getPartyById(@PathVariable(value = "id") Long partyId) {
 		return partyRepository.findById(partyId)
 				.orElseThrow(() -> new ResourceNotFoundException("Party", "Id", partyId));
 	}
 
-	/*
-	 * Update party
-	 */
 	@PutMapping("/party/{id}")
 	public Party updateParty(@PathVariable(value = "id") Long partyId, @Valid @RequestBody Party partyRequest) {
 		Party party = partyRepository.findById(partyId)
@@ -63,13 +52,17 @@ public class PartyController {
 		party.setName(partyRequest.getName());
 		party.setSalutation(partyRequest.getSalutation());
 		party.setType(partyRequest.getType());
+		party.setUpdatedAt(new Date());
+		party.setAddLine1(partyRequest.getAddLine1());
+		party.setAddLine2(partyRequest.getAddLine2());
+		party.setAddLine3(partyRequest.getAddLine3());
+		party.setCity(partyRequest.getCity());
+		party.setState(partyRequest.getState());
+		party.setPin(partyRequest.getPin());
 
 		return partyRepository.save(party);
 	}
 
-	/*
-	 * Delete party
-	 */
 	@DeleteMapping("/party/{id}")
 	public ResponseEntity<?> deleteParty(@PathVariable(value = "id") Long partyId) {
 		Party party = partyRepository.findById(partyId)
