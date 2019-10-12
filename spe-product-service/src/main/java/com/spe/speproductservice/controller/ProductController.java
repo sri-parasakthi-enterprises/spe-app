@@ -1,5 +1,7 @@
 package com.spe.speproductservice.controller;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,10 @@ public class ProductController {
 
 	@PostMapping(path = "/products")
 	public Product createProduct(@Valid @RequestBody Product product) {
+		Date d = new Date();
+		product.setCreatedAt(d);
+		product.setUpdatedAt(d);
+
 		return productRepository.save(product);
 	}
 
@@ -53,6 +59,7 @@ public class ProductController {
 		product.setSgstRate(productRequest.getSgstRate());
 		product.setCgstRate(productRequest.getCgstRate());
 		product.setIgstRate(productRequest.getIgstRate());
+		product.setUpdatedAt(new Date());
 
 		return productRepository.save(product);
 	}

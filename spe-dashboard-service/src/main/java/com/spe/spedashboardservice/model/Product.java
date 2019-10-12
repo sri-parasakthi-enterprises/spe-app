@@ -1,4 +1,4 @@
-package com.spe.speproductservice.model;
+package com.spe.spedashboardservice.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,7 +17,7 @@ public class Product implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8657528063883281070L;
+	private static final long serialVersionUID = -53467183200530380L;
 
 	@Id
 	private Long id;
@@ -133,4 +133,3 @@ public class Product implements Serializable {
 	}
 
 }
-

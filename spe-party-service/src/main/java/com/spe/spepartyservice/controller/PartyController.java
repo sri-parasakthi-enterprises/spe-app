@@ -35,6 +35,10 @@ public class PartyController {
 
 	@PostMapping("/party")
 	public Party createParty(@Valid @RequestBody Party party) {
+		Date d = new Date();
+		party.setCreatedAt(d);
+		party.setUpdatedAt(d);
+
 		return partyRepository.save(party);
 	}
 
